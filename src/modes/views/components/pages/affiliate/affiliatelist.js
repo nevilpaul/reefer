@@ -15,10 +15,7 @@ export default class Affiliatelist extends Component {
             getNoButtons:''
         }
         this.checkEmptyObject = this.checkEmptyObject.bind(this)
-    }
-
-  
-  
+  }
   _isMounted=false;
   componentDidMount(){
     this._isMounted =true;

@@ -48,7 +48,7 @@ class CreateAccount extends Component {
     console.log(urlParam)
     if(urlParam != " " || urlParam != null || urlParam !=undefined){
       if(typeof urlParam == "string"){
-        if(isNaN(urlParam) == true && urlParam.length > 4){
+        if(isNaN(urlParam) == true && urlParam.length > 5){
           this.setState({
             referUser:urlParam
           })
@@ -171,55 +171,56 @@ class CreateAccount extends Component {
           var num = h.checkPhoneNumber(phone);
           if(typeof num == 'number'){
             if (this.state.username != "" &&  this.state.password != "" && this.state.password == this.state.confirmPassword  && this.state.firstname != "" && this.state.lastname != "" && this.state.phone != "" && this.state.referUser != "") {
+              if(this.state.username.length >=5){
+                if(validateEmail(email)){
+                  jQuery.ajax({
+                      url: urls('/createaccount/index.php'),
+                      method: "POST",
+                      data: {
+                          firstname: firstname,
+                          lastname: lastname,
+                          username: username,
+                          email: email,
+                          referee: referUser,
+                          phone: phone,
+                          password: password,
+                      },
+                      dataType: "html",
+                      beforeSend:function(){
+                          jQuery('.allLoader').fadeIn();
+                      },
+                      success: function (data) {
 
-              if(validateEmail(email)){
-                jQuery.ajax({
-                    url: urls('/createaccount/index.php'),
-                    method: "POST",
-                    data: {
-                        firstname: firstname,
-                        lastname: lastname,
-                        username: username,
-                        email: email,
-                        referee: referUser,
-                        phone: phone,
-                        password: password,
-                    },
-                    dataType: "html",
-                    beforeSend:function(){
-                        jQuery('.allLoader').fadeIn();
-                    },
-                    success: function (data) {
+                        data = JSON.parse(data);
+                        console.log(data);
+                        if(data.action == "success"){
+                          h.setState({
+                            message:data.message,
+                            showMessage:true
+                          })
 
-                      data = JSON.parse(data);
-                      console.log(data);
-                      if(data.action == "success"){
-                        h.setState({
-                          message:data.message,
-                          showMessage:true
-                        })
+                          setTimeout(() => {
+                            jQuery('.allLoader').fadeOut();
+                          }, 2000);
 
-                        setTimeout(() => {
-                          jQuery('.allLoader').fadeOut();
-                        }, 2000);
+                          setTimeout(() => h.props.history.push("/complete/success?tpn="+data.phone), 3000)
 
-                        setTimeout(() => h.props.history.push("/complete/success?tpn="+data.phone), 3000)
+                          h.setRedirect(1);
+                        }else{
+                          h.setState({
+                            message:'Please Try again or use data that is not used to get an account',
+                            showMessage:true
+                          })
 
-                        h.setRedirect(1);
-                      }else{
-                        h.setState({
-                          message:'Please Try again or use data that is not used to get an account',
-                          showMessage:true
-                        })
-
+                        }
+                        
                       }
-                      
-                    }
-                
-                });
+                  
+                  });
 
-              }else{
-                alert('please enter a valid email');
+                }else{
+                  alert('please enter a valid email');
+                }
               }
 
               
@@ -228,8 +229,6 @@ class CreateAccount extends Component {
             console.log(num);
             alert('Please enter Phone number in this format "254700000000"')
           }
-          
-
           
   }
   render(){
