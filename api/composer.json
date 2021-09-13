@@ -1,0 +1,10 @@
+{
+    "require": {
+        "nesbot/carbon": "^2.49",
+        "sendgrid/sendgrid": "~7",
+        "twilio/sdk": "^5.0",
+        "firebase/php-jwt": "^5.4",
+        "php-ffmpeg/php-ffmpeg": "^0.14.0",
+        "cboden/ratchet": "^0.4.2"
+    }
+}

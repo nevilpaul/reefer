@@ -1,0 +1,2 @@
+[26-Jun-2021 20:30:16 Africa/Nairobi] PHP Warning:  fwrite() expects parameter 2 to be string, object given in /home/footersx/public_html/curl/liparesponse.php on line 37
+[26-Jun-2021 21:21:21 Africa/Nairobi] PHP Warning:  fwrite() expects parameter 2 to be string, object given in /home/footersx/public_html/curl/liparesponse.php on line 37

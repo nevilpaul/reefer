@@ -1,0 +1,14 @@
+{
+    "host": "ftp.footers.xyz",
+    "port": 21, 
+    "username": "footersx",
+    "password": "h82Le;GtDb7N2.",
+    "rootDirectory": "/home/footersx/",
+    "autoCreateDirectory": false,
+    "ignoredFilenames": ["example.py", "anotherFilename.json"],
+    "ignoredExtensions": [".ignore", ".txt"],
+    "ignoredFolders": ["ignore", "IGNORE"],
+    "sessionCacheEnabled": true,
+    "connectionTimeout": 600,
+    "passive": true
+}
