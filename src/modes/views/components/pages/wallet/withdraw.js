@@ -65,7 +65,6 @@ class Withdraw extends Component {
                       <div className="col-12">
                           <div className="create_report_btn mt_30">
                               <Link to='#' className="btn_1 w-100">SEND</Link>
-                              
                           </div>
                       </div>
                   </div>

@@ -59,7 +59,6 @@ class Signin extends Component {
                 const Auth = JSON.parse(data);
                 if(Auth.acccountComplete == 2){
                   setTimeout(() => h.props.history.push("/dashboard"), 0)
-                  console.log(Auth)
                 }else if(Auth.acccountComplete == 0){
                   setTimeout(() => h.props.history.push("/complete/success?tpn="+data.phone), 0)
                 }else{
@@ -80,7 +79,7 @@ class Signin extends Component {
     this._isMounted =false;
   }
   checkLoggedIn=(status)=>{
-    console.log(this.props.logginstatus);
+    // console.log(this.props.logginstatus);
   }
   userchar =(event)=>{
 

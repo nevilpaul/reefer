@@ -13,7 +13,6 @@ class AuthO {
   }
   loggedOut=cb =>{
     let session = getCookie('_AIOf');
-    console.log(session)
     if(session != null || session != undefined){
       this.isLoggedIn = false;
       deleteCookie('_AIOf')

@@ -40,13 +40,10 @@ class Payments extends Component {
                 },
                 dataType: "html",
                 success: function (data) {
-                    
                     const datas = JSON.parse(data);
-                    console.log(datas);
                      h.setState({
                        balance:datas.balance
-                     }) 
-
+                     })
                 }
             })
         }
@@ -55,10 +52,6 @@ class Payments extends Component {
         return false;
       }
       
-  }
-  componentWillUnmount(){
-    
-    this._isMounted=false;
   }
   sendNow=(e)=>{
     
@@ -86,7 +79,6 @@ class Payments extends Component {
                         dataType: "html",
                         success: function (data) {
                             const datas = JSON.parse(data);
-                            console.log(datas);
                             if(datas.error == 200){
                                 alert(datas.message)
                             }                        
@@ -106,7 +98,8 @@ class Payments extends Component {
   }
   searchResult(event){
     const vals = event.target.value;
-    const userId = localStorage.getItem('__esMode')
+    const userId = localStorage.getItem('__esMode');
+
     if(this._isMounted){
         this.setState({
             usernameVal:vals
@@ -125,12 +118,10 @@ class Payments extends Component {
                     userId:userId
                 },
                 dataType: "html",
-                success: function (data) {
-                    
+                success: function (data) {       
                     const datas = JSON.parse(data);
-                    console.log(datas);
                     if(datas.length == 0){
-                        console.log(datas.length)
+                        return false
                     }else{
                         h.setState({
                             dataArray:datas,
@@ -168,7 +159,9 @@ class Payments extends Component {
     }
     
   }
-
+  componentWillUnmount(){
+    this._isMounted=false;
+  }
   render() {
     const {balance,usernameVal,dataArray,showResult,amount} = this.state
     

@@ -17,7 +17,6 @@ class Pay extends Component {
     const white ={
         color:'white'
     }
-    console.log('logger',this.props.user)
     return (
 
       <React.Fragment>

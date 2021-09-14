@@ -66,7 +66,6 @@ class CreateAccount extends Component {
       const token = JSON.parse(cName);
 
       const newToken = token.token;
-      console.log(newToken)
       if(token.token != " " || token.token != null || token.token !=undefined){
         const uri = urls('login/credencialsCheck.php')
         const h =this;
@@ -79,7 +78,6 @@ class CreateAccount extends Component {
             dataType: "html",
             success: function (data) {
                const Auth = JSON.parse(data);
-               console.log(Auth)
                if(Auth.acccountComplete == 2){
                  setTimeout(() => h.props.history.push("/dashboard"), 0)
                }else if(Auth.acccountComplete == 0){
@@ -93,7 +91,7 @@ class CreateAccount extends Component {
     }
   }
   checkLoggedIn=(status)=>{
-    console.log(this.props.logginstatus);
+    // console.log(this.props.logginstatus);
   }
   firstchar =(event)=>{
     if(this._isMounted){
@@ -213,7 +211,6 @@ class CreateAccount extends Component {
                       success: function (data) {
 
                         data = JSON.parse(data);
-                        console.log(data);
                         if(data.action == "success"){
                           h.setState({
                             message:data.message,
@@ -247,7 +244,6 @@ class CreateAccount extends Component {
               
             }
           }else if(typeof num == 'boolean'){
-            console.log(num);
             alert('Please enter Phone number in this format "254700000000"')
           }
         }

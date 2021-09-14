@@ -10,5 +10,4 @@ export const validateEmail=(email)=>{
 export const copyLink=(text)=>{
   text.select();
   text.execCommand('copy');
-  console.log('copied');
 }

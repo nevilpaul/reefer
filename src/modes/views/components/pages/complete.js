@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Redirect,Route,withRouter,Link} from "react-router-dom";
+// import {Redirect,Route,withRouter,Link} from "react-router-dom";
 import jQuery from 'jquery'
 import {urls} from './methods'
 class Complete extends Component {
@@ -31,7 +31,6 @@ class Complete extends Component {
           dataType: "html",
           success: function (data) {
             const Auth = JSON.parse(data);
-            console.log(Auth)
           }
         })
       }
@@ -66,11 +65,9 @@ class Complete extends Component {
     const urlParam = this.query('tpn')
 
     if(urlParam != " " || urlParam != null || urlParam !=undefined ){
-      console.log(urlParam)
       const uri = urls('login/credencialsCheck.php')
         const h =this;
         const valNum = this.checkPhoneNumber(urlParam)
-        console.log(valNum)
         h.setState({phone:valNum})
     }
 

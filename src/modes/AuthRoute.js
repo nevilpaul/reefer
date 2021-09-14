@@ -9,7 +9,6 @@ export const  ProtectedRoutes = ({component:Component,...rest}) => {
       render={
         props => {
           if(AuthO.isAuthO()){
-            console.log(AuthO.isAuthO()+'we are active')
             return <Component {...props}/>
           }else{
             return(
