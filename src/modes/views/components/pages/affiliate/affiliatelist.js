@@ -73,7 +73,7 @@ export default class Affiliatelist extends Component {
     const {transactions,itemsperpage,getNoButtons}=this.state
     // const pagecount = Math.ceil(transactions.length/)
     const itemsToDisplay = transactions.slice(pageVisited,pageVisited+ itemsperpage).map(items=>(
-        <tr>
+        <tr key={items.referId}>
             <td>{items.referId}</td>
             <td>{items.firstname}</td>
             <td>{items.lastname}</td>

@@ -1,8 +1,7 @@
 import React,{Component} from 'react'
-import {Redirect,Route,withRouter,Link} from "react-router-dom";
+import {withRouter,Link} from "react-router-dom";
 import jQuery from 'jquery'
 import Loader from "react-loader-spinner";
-import axios from 'axios'
 import {urls} from './methods'
 import AuthO from './auth'
 import {setCookie,getCookie,checkCookie,validateEmail} from './cookie'
@@ -36,27 +35,30 @@ class CreateAccount extends Component {
     this.query = this.query.bind(this);
     this.checkPhoneNumber = this.checkPhoneNumber.bind(this);
   }
+  _isMounted=false;
   query =(param)=>{
     const urlParam = new URLSearchParams(this.props.location.search)
     return urlParam.get(param)
   }
   componentDidMount(){
-
+    this._isMounted=true
     var title = document.getElementById('title');
     title.innerHTML = `Sign Up | Reefer`;
     const urlParam = this.query('re')
-    console.log(urlParam)
-    if(urlParam != " " || urlParam != null || urlParam !=undefined){
-      if(typeof urlParam == "string"){
-        if(isNaN(urlParam) == true && urlParam.length > 5){
-          this.setState({
-            referUser:urlParam
-          })
-        }
-      }  
+    if(this._isMounted){
+      if(urlParam != " " || urlParam != null || urlParam !=undefined){
+        if(typeof urlParam == "string"){
+          if(isNaN(urlParam) == true && urlParam.length > 5){
+            this.setState({
+              referUser:urlParam
+            })
+          }
+        }  
+      }
     }
   }
   componentWillMount=()=>{
+
     const cName = getCookie('_AIOf');
     if(cName == null || cName == undefined ){
       return(false)
@@ -90,88 +92,107 @@ class CreateAccount extends Component {
       }
     }
   }
-
   checkLoggedIn=(status)=>{
     console.log(this.props.logginstatus);
   }
   firstchar =(event)=>{
-
-    const val = event.target.value;
-    this.setState({
-      firstname:val
-    });
+    if(this._isMounted){
+      const val = event.target.value;
+        this.setState({
+          firstname:val
+      });
+    }
+    
   }
   lastchar =(event)=>{
-
-    const val = event.target.value;
-    this.setState({
-      lastname:val
-    });
+    if(this._isMounted){
+      const val = event.target.value;
+      this.setState({
+        lastname:val
+      });
+    }
+    
   }
   userchar =(event)=>{
-
-    const val = event.target.value;
-    this.setState({
-      username:val
-    });
+    if(this._isMounted){
+      const val = event.target.value;
+        this.setState({
+          username:val
+      });
+    }
+    
   }
   email=(event)=>{
-    const val = event.target.value;
-    this.setState({
-      email:val
-    });
+    if(this._isMounted){
+      const val = event.target.value;
+      this.setState({
+        email:val
+      });
+    }
+    
   }
   phonecheck=(event)=>{
-    const val = event.target.value;
-    this.setState({
-      phone:val
-    });
+    if(this._isMounted){
+      const val = event.target.value;
+      this.setState({
+        phone:val
+      });
+    }
+    
   }
   passchar =(event)=>{
-
-    const val = event.target.value;
-    this.setState({
-      password:val
-    });
+    if(this._isMounted){
+      const val = event.target.value;
+      this.setState({
+        password:val
+      });
+    }
+    
 
   }
   passrepeat =(event)=>{
-    const val = event.target.value;
-    this.setState({
-      confirmPassword:val
-    });
+    if(this._isMounted){
+      const val = event.target.value;
+        this.setState({
+          confirmPassword:val
+        });
+      }
+    
   }
 
   setRedirect(dataBoolen) {
+    if(this._isMounted){
       if (dataBoolen == 1) {
           this.setState({
               redirect: true
           });
       }
+    }
   }
   checkPhoneNumber(number){
-
-    number = parseInt(number);
-    if(typeof number == 'number' ){
-      const string = number.toString();
-      if(string.length == 12){
-        return parseInt(string);
+    if(this._isMounted){
+      number = parseInt(number);
+      if(typeof number == 'number' ){
+        const string = number.toString();
+        if(string.length == 12){
+          return parseInt(string);
+        }
+      }else{
+        return false;
       }
-    }else{
-      return false;
     }
 
   }
   Createaccount=(e)=>{
 
     e.preventDefault();
-
+    if(this._isMounted){
       const {firstname,lastname,username,email,password,phone,referUser,confirmPassword,} =this.state
       const h = this;
           var num = h.checkPhoneNumber(phone);
           if(typeof num == 'number'){
-            if (this.state.username != "" &&  this.state.password != "" && this.state.password == this.state.confirmPassword  && this.state.firstname != "" && this.state.lastname != "" && this.state.phone != "" && this.state.referUser != "") {
-              if(this.state.username.length >=5){
+            if (username != "" &&  password != "" && password == confirmPassword  && firstname != "" && lastname != "" && phone != "" && referUser != "") {
+              if(username.length >=5){
                 if(validateEmail(email)){
                   jQuery.ajax({
                       url: urls('/createaccount/index.php'),
@@ -229,7 +250,10 @@ class CreateAccount extends Component {
             console.log(num);
             alert('Please enter Phone number in this format "254700000000"')
           }
-          
+        }
+  }
+  componentWillUnmount(){
+    this._isMounted=false
   }
   render(){
     const {firstname,lastname,username,email,password,phone,confirmPassword,message,showMessage} =this.state

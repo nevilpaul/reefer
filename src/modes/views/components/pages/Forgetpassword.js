@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 class Forget extends Component {
   constructor(props) {
     super(props)
@@ -8,12 +7,19 @@ class Forget extends Component {
     }
     this.emailVal = this.emailVal.bind(this);
     this.submitNow = this.submitNow.bind(this);
+    this.checkEmptyObject = this.checkEmptyObject.bind(this)
+  }
+  _isMounted=false;
+  checkEmptyObject =(object)=>{
+    return JSON.stringify(object) === JSON.stringify({})
   }
   emailVal =(event)=>{
     const valMail = event.target.value;
-    this.setState({
-      email:valMail
-    });
+    if(this._isMounted){
+      this.setState({
+        email:valMail
+      });
+    }
   }
 
   submitNow=(event)=>{
@@ -21,6 +27,9 @@ class Forget extends Component {
     const {email} =this.state;
     alert(email)
 
+  }
+  componentWillUnmount(){
+    this._isMounted=false
   }
   render(){
     const {email} =this.state;

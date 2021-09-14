@@ -22,57 +22,59 @@ class Signin extends Component {
     this.submitLogins =this.submitLogins.bind(this);
     this.setRedirect =this.setRedirect.bind(this);
     this.checkLoggedIn = this.checkLoggedIn.bind(this);
-    this.credentialsCheck = this.credentialsCheck.bind(this);
-    this.checkPhoneNumber = this.checkPhoneNumber.bind(this);
 
+    this.checkPhoneNumber = this.checkPhoneNumber.bind(this);
+    this.checkEmptyObject = this.checkEmptyObject.bind(this)
   }
   _isMounted=false;
-
-  credentialsCheck =(session)=>{
-
+  checkEmptyObject =(object)=>{
+    return JSON.stringify(object) === JSON.stringify({})
   }
   componentDidMount(){
     var title = document.getElementById('title');
     title.innerHTML = `Sign In | Helapoint`;
-  }
-  componentWillMount=()=>{
     this._isMounted=true;
-    const startSession = sessionStorage.getItem('_AIOf');
+
     const cName = getCookie('_AIOf');
-    if(cName == null || cName == undefined ){
-      return(false)
+    if(this.checkEmptyObject(cName)){
+      return false
     }else{
-      const token = JSON.parse(cName);
-
-      const newToken = token.token;
-
-      if(token.token != " " || token.token != null || token.token !=undefined){
-        const uri = urls('login/credencialsCheck.php')
-        const h =this;
-
-        if(this._isMounteds){
-          jQuery.ajax({
-            url: uri,
-            method: "GET",
-            data: {
-                token: newToken,
-            },
-            dataType: "html",
-            success: function (data) {
-               const Auth = JSON.parse(data);
-               if(Auth.acccountComplete == 2){
-                 setTimeout(() => h.props.history.push("/dashboard"), 0)
-               }else if(Auth.acccountComplete == 0){
-                 setTimeout(() => h.props.history.push("/complete/success?tpn="+data.phone), 0)
-               }else{
-                 return false;
-               }
-            }
-          })
+      if(cName == null || cName == undefined ){
+        return(false)
+      }else{
+        const token = JSON.parse(cName);
+        const newToken = token.token;
+        if(token.token != " " || token.token != null || token.token !=undefined){
+          const uri = urls('login/credencialsCheck.php')
+          const h =this;
+          if(this._isMounted){
+            jQuery.ajax({
+              url: uri,
+              method: "GET",
+              data: {
+                  token: newToken,
+              },
+              dataType: "html",
+              success: function (data) {
+                const Auth = JSON.parse(data);
+                if(Auth.acccountComplete == 2){
+                  setTimeout(() => h.props.history.push("/dashboard"), 0)
+                  console.log(Auth)
+                }else if(Auth.acccountComplete == 0){
+                  setTimeout(() => h.props.history.push("/complete/success?tpn="+data.phone), 0)
+                }else{
+                  return false;
+                }
+              }
+            })
+          }
+          
         }
-        
       }
     }
+  }
+  componentWillMount=()=>{
+    
   }
   componentWillUnmount(){
     this._isMounted =false;

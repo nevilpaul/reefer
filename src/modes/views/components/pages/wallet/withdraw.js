@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-
+import {Link} from 'react-router-dom'
 class Withdraw extends Component {
+
   constructor(props){
     super(props)
     this.state ={
@@ -8,20 +9,35 @@ class Withdraw extends Component {
       number:"",
       token:""
     }
+    this.checkEmptyObject = this.checkEmptyObject.bind(this)
+  }
+  _isMounted=false;
+  checkEmptyObject =(object)=>{
+    return JSON.stringify(object) === JSON.stringify({})
   }
   amountChange(event){
     const amount =  event.target.value;
-    this.setState({
+    if(this._isMounted){
+      this.setState({
         amount:amount
-    })
+      })
+    }
+    
   }
   numberChange(event){
     const number =  event.target.value;
-    this.setState({
-        number:number
-    })
+    if(this._isMounted){
+      this.setState({
+          number:number
+      })
+    }
+  }
+  componentWillUnmount(){
+    this._isMounted=false
   }
   render() {
+    const {amount} =this.state
+    const {phone} =this.props.user
     return (
 
       <div className="col-lg-8">
@@ -36,19 +52,20 @@ class Withdraw extends Component {
                       <div className="col-lg-12">
                           <label >Amount <sup>Ksh</sup></label>
                           <div className="common_input mb_20">
-                              <input type="text" placeholder="500" value="500" onChange={this.amountChange}/>
+                              <input type="text" placeholder="500" value={amount} onChange={this.amountChange}/>
                           </div>
                       </div>
                       <div className="col-lg-12">
                           <label >Payment Method *Mpesa*</label>
                           <div className="common_input mb_20">
-                              <input type="text"  value="254701753461" disabled onChange={this.numberChange}/>
+                              <input type="text"  value={phone} disabled/>
                           </div>
                       </div>
 
                       <div className="col-12">
                           <div className="create_report_btn mt_30">
-                              <a href="#" className="btn_1 w-100">SEND</a>
+                              <Link to='#' className="btn_1 w-100">SEND</Link>
+                              
                           </div>
                       </div>
                   </div>
